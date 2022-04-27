@@ -5,6 +5,8 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import auth from '../../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { updateProfile } from 'firebase/auth';
+import PageTitle from '../../Shared/PageTitle/PageTitle';
+import useToken from '../../../hooks/useToken';
 
 
 const Register = () => {
@@ -19,6 +21,7 @@ const Register = () => {
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
+    const [token] = useToken(user);
 
     const navigate = useNavigate();
 
@@ -26,8 +29,8 @@ const Register = () => {
         navigate('/login')
     }
 
-    if (user) {
-        console.log(user)
+    if (token) {
+        navigate('/home');
     }
 
 
@@ -54,6 +57,7 @@ const Register = () => {
 
     return (
         <div className='container w-50 mt-3 mx-auto'>
+            <PageTitle title='Register'></PageTitle>
             <h2 className='text-primary text-center'>Please Register</h2>
             <Form onSubmit={handleRegister}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
